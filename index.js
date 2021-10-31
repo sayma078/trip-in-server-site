@@ -72,7 +72,13 @@ async function run(){
                     res.send(documents);
                 });
         });
-
+        //delete API
+        app.delete("/DeleteBookings/:id", async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await bookingCollection.deleteOne(query);
+            res.json(result);
+          });
     }
     finally{
         // await client.close()
