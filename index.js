@@ -21,6 +21,7 @@ async function run(){
         await client.connect();
         const database = client.db('tour');
         const servicesCollection = database.collection('services')
+        const bookingCollection = database.collection('booking')
 
         //Get API
         app.get('/services', async(req, res) =>{
@@ -46,6 +47,24 @@ async function run(){
             console.log(result);
             res.json(result);
         })
+
+        //booking post API
+        app.post('/booking', async(req, res) =>{
+            const booking = req.body;
+            console.log('hit the api', booking)
+          
+            const result = await bookingCollection.insertOne(booking);
+            console.log(result);
+            res.json(result);
+        })
+
+        //booking get API
+        app.get('/booking', async(req, res) =>{
+            const cursor = bookingCollection.find({});
+            const booking = await cursor.toArray();
+            res.send(booking);
+        })
+
     }
     finally{
         // await client.close()
