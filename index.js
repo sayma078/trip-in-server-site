@@ -65,6 +65,14 @@ async function run(){
             res.send(booking);
         })
 
+        app.get("/orderEmail", (req, res) => {
+            bookingCollection
+                .find({ email: req.query.email })
+                .toArray((err, documents) => {
+                    res.send(documents);
+                });
+        });
+
     }
     finally{
         // await client.close()
